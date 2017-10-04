@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.util.Collections;
-import javax.swing.JOptionPane;
 import mapping.DevicePointList;
 import mapping.DeviceWindow;
 
@@ -67,6 +66,10 @@ public class LineChartPanel extends javax.swing.JPanel {
     }
     
     private void drawChart(Graphics g) {
+        if (realPoints == null || realPoints.size() < 2) {
+            return;
+        }
+        
         int w = getWidth();
         int h = getHeight();
         
@@ -81,13 +84,11 @@ public class LineChartPanel extends javax.swing.JPanel {
                 h - padding
         ));
         
-        double minX = Collections.<RealPoint>min(realPoints, (RealPoint lhs, RealPoint rhs) -> 
-                Double.compare(lhs.x, rhs.x)
-        ).x;
+        Collections.<RealPoint>sort(realPoints);
         
-        double maxX = Collections.<RealPoint>max(realPoints, (RealPoint lhs, RealPoint rhs) -> 
-                Double.compare(lhs.x, rhs.x)
-        ).x;
+        double minX = realPoints.get(0).x;
+        
+        double maxX = realPoints.get(realPoints.size() - 1).x;
         
         String strMinX = String.format("%.1f", minX);
         String strMaxX = String.format("%.1f", maxX);
@@ -210,8 +211,6 @@ public class LineChartPanel extends javax.swing.JPanel {
             g.drawString(strYi, yScaleOffset - yiW/2, h - y - xScaleOffset + xyScaleH/2);
         }
         
-        System.out.println("Tada");
-        
         /**
         * Map and draw lines
         */
@@ -221,9 +220,7 @@ public class LineChartPanel extends javax.swing.JPanel {
                     new RealWindow(minX, minY, Math.abs(maxX - minX), Math.abs(maxY - minY)),
                     new DeviceWindow(0, 0, (int)chartArea.getHeight(), (int)chartArea.getWidth())
             );
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Invalid dimensions.");
-        }
+        } catch (Exception ex) {}
         
         int xPadding = labelPadding + axesPadding + numberPadding + chartPadding;
         
