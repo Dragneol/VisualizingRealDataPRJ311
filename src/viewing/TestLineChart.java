@@ -63,6 +63,7 @@ public class TestLineChart extends javax.swing.JFrame {
         chart = new LineChartPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Line Chart");
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Data of series"));
 
