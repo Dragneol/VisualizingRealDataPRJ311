@@ -32,7 +32,7 @@ public class RealPointList extends ArrayList<RealPoint> {
 
     public RealPointList(Collection<RealPoint> realPoints) {
         super();
-        Iterator it = new realPoints.iterator();
+        Iterator it = realPoints.iterator();
         while (it.hasNext()) {
             this.add((RealPoint) it.next());
         }
