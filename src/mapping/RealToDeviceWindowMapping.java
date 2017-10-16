@@ -26,6 +26,12 @@ public class RealToDeviceWindowMapping {
 
         c1 = dWin.left - cw * rWin.minX;
         c2 = ch * rWin.minY + dWin.top + dWin.height;
+
+        //Calculation of mapping a point
+        //x2 = Cwx1  + left – CwminX
+        //x2 = Cwx1  + C1
+        //y2 = - Chy1 + ChminY + top + h
+        //y2 = - Chy1 + C2
     }
 
     public Point map(RealPoint p) {
